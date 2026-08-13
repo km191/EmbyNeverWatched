@@ -1,0 +1,43 @@
+<div is="emby-scroller" class="view flex flex-direction-column scrollFrameY flex-grow" data-horizontal="false" data-forcescrollbar="true" data-centerfocus="true" data-controller="__plugin/neverwatchedjs" data-title="Never Watched">
+    <div class="scrollSlider flex-grow flex-direction-column padded-left padded-left-page padded-right padded-top-page padded-bottom-page">
+
+        <form class="auto-center">
+            <div style="height:0; overflow: hidden;"><input type="text" name="fakeusernameremembered" tabindex="-1" /><input type="password" name="fakepasswordremembered" tabindex="-1" /></div>
+
+            <div style="display: none;">
+                <input type="text" id="PreventChromeAutocomplete" name="PreventChromeAutocomplete" autocomplete="address-level4" />
+            </div>
+
+            <h2 class="sectionTitle">Never Watched</h2>
+            <div class="fieldDescription">自动把"已观看"标记撤销为"未观看"，让媒体库永远显示未观看。播放停止后秒级生效，无需定时脚本。</div>
+
+            <div class="checkboxContainer">
+                <label class="checkboxContainer-label">
+                    <input is="emby-checkbox" type="checkbox" class="chkEnabled" />
+                    <span>启用插件</span>
+                </label>
+                <div class="fieldDescription">关闭后插件不再干预，条目可正常被标记为已观看。</div>
+            </div>
+
+            <div class="checkboxContainer">
+                <label class="checkboxContainer-label">
+                    <input is="emby-checkbox" type="checkbox" class="chkResetPosition" />
+                    <span>同时清空播放进度</span>
+                </label>
+                <div class="fieldDescription">开启后播放过的条目也不会出现在"继续观看"；关闭则保留播放进度，仅撤销已观看标记。</div>
+            </div>
+
+            <div class="checkboxContainer">
+                <label class="checkboxContainer-label">
+                    <input is="emby-checkbox" type="checkbox" class="chkBlockManualToggle" />
+                    <span>拦截手动标记已观看</span>
+                </label>
+                <div class="fieldDescription">开启后界面上手动点击"标记已观看"也会被立即撤销，媒体库永远显示未观看。</div>
+            </div>
+
+            <div style="margin-top:2em;">
+                <button is="emby-button" type="submit" class="raised button-submit block">保存</button>
+            </div>
+        </form>
+    </div>
+</div>

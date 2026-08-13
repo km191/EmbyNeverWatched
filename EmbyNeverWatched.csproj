@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>EmbyNeverWatched</AssemblyName>
+    <RootNamespace>EmbyNeverWatched</RootNamespace>
+    <Version>1.0.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--
+      Emby 程序目录（/system 程序集所在位置）。可用 -p:EmbySystemDir=xxx 覆盖。
+      找不到指定路径时自动回退搜索常见安装位置（Windows / Linux / Docker 宿主机）。
+    -->
+    <EmbySystemDir Condition="'$(EmbySystemDir)' == ''">C:\Users\lsq09\AppData\Roaming\Emby-Server\system</EmbySystemDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 直接引用 Emby 4.9.x 真实程序集（程序目录 /system 下）；运行时由 Emby 自身加载，不随插件复制 -->
+    <Reference Include="MediaBrowser.Common">
+      <HintPath>$(EmbySystemDir)\MediaBrowser.Common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="MediaBrowser.Controller">
+      <HintPath>$(EmbySystemDir)\MediaBrowser.Controller.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="MediaBrowser.Model">
+      <HintPath>$(EmbySystemDir)\MediaBrowser.Model.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 配置页 HTML/JS 以嵌入资源方式打进 DLL -->
+    <EmbeddedResource Include="Configuration\configPage.html" />
+    <EmbeddedResource Include="Configuration\configPage.js" />
+  </ItemGroup>
+
+</Project>
