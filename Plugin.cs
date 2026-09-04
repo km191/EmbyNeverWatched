@@ -153,9 +153,10 @@ namespace EmbyNeverWatched
                 if (userData == null) return;
 
                 bool positionClearNeeded = config.ResetPosition && userData.PlaybackPositionTicks != 0;
+                bool lastPlayedClearNeeded = config.ResetPosition && userData.LastPlayedDate.HasValue;
                 bool needSave = userData.Played
                     || userData.PlayCount != 0
-                    || userData.LastPlayedDate.HasValue
+                    || lastPlayedClearNeeded
                     || positionClearNeeded;
 
                 if (!needSave) return;
@@ -165,11 +166,14 @@ namespace EmbyNeverWatched
 
                 userData.Played = false;
                 userData.PlayCount = 0;
-                userData.LastPlayedDate = null;
                 if (config.ResetPosition)
                 {
+                    // 仅当用户勾选“同时清空播放进度”时才清空播放位置与最后播放时间。
+                    userData.LastPlayedDate = null;
                     userData.PlaybackPositionTicks = 0;
                 }
+                // 未勾选时：保留 LastPlayedDate 与 PlaybackPositionTicks，
+                // 让条目继续按正确顺序出现在“继续观看”中，并保留恢复播放进度。
 
                 // 用 Import 原因保存：不会再次被判定为"播放完成已观看"，避免无限循环；
                 // 同时该保存会触发 UserDataChanged 广播，客户端秒级刷新为未观看。
